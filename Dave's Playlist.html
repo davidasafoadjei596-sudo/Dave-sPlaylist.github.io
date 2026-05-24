@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Dave's Playlist | Music Vibe Hub</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f5f0e7 0%, #e8e0d5 100%);
+      color: #1e1b1a;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* Vibrant solid design — no glassmorphism */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 1.8rem;
+    }
+
+    /* navbar solid with shadow */
+    nav {
+      background: #1e2a2f;
+      border-radius: 0 0 2rem 2rem;
+      padding: 1rem 2rem;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.6rem;
+      background: linear-gradient(135deg, #ffb347, #ff6b4a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links a {
+      color: #f0ede8;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .nav-links a:hover { color: #ffb347; }
+
+    /* hero solid card */
+    .hero-section {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      margin: 1rem 0 2rem;
+    }
+    .hero-card {
+      background: #ffffffdd;
+      background: linear-gradient(115deg, #fff8f0, #fff3e6);
+      border-radius: 3rem;
+      padding: 3rem 2rem;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 35px rgba(0,0,0,0.05);
+      border: 1px solid #ffddb0;
+    }
+    .hero-card h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: #2c3e2f;
+      letter-spacing: -0.5px;
+    }
+    .most-played {
+      background: #2c3e2f;
+      display: inline-block;
+      padding: 0.6rem 1.8rem;
+      border-radius: 3rem;
+      color: #fae67a;
+      margin: 1rem 0;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .scroll-down a {
+      color: #b45f2b;
+      font-size: 2rem;
+      animation: bounce 2s infinite;
+      display: inline-block;
+    }
+    @keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(8px);} }
+
+    /* about section solid */
+    .about-card {
+      background: #fff6ed;
+      border-radius: 2rem;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.05);
+      border-left: 8px solid #ff914d;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 1.8rem 0 1rem;
+      border-left: 6px solid #ff914d;
+      padding-left: 1rem;
+      color: #2c3e2f;
+    }
+
+    /* playlist grid - vibrant cards without blur */
+    .playlist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.8rem;
+      margin: 2rem 0;
+    }
+    .song-card {
+      background: #ffffff;
+      border-radius: 1.8rem;
+      padding: 1.3rem;
+      transition: all 0.25s ease;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+      border: 1px solid #ffe1bd;
+      cursor: pointer;
+    }
+    .song-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px rgba(0,0,0,0.12);
+      background: #fffef7;
+    }
+    .song-title {
+      font-weight: 800;
+      font-size: 1.3rem;
+      display: flex;
+      justify-content: space-between;
+      color: #2d3e2a;
+    }
+    .artist {
+      color: #b45f2b;
+      font-weight: 500;
+      margin: 0.4rem 0;
+    }
+    .play-btn {
+      background: #ff914d;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.5rem 1.2rem;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 0.5rem;
+    }
+    .play-btn:hover { background: #e67e3a; transform: scale(1.02);}
+    .play-count-badge {
+      font-size: 0.75rem;
+      background: #f3e5d8;
+      padding: 0.2rem 0.7rem;
+      border-radius: 2rem;
+      display: inline-block;
+    }
+
+    /* audio player bar solid */
+    .player-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #1e2a2f;
+      padding: 0.9rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+      z-index: 200;
+      box-shadow: 0 -5px 20px rgba(0,0,0,0.15);
+      border-top: 2px solid #ff914d;
+    }
+    .now-playing {
+      color: #fff2e0;
+      font-weight: 500;
+      background: #2a3a3f;
+      padding: 0.3rem 1rem;
+      border-radius: 2rem;
+    }
+    audio {
+      height: 42px;
+      border-radius: 3rem;
+      flex: 2;
+      min-width: 200px;
+    }
+
+    /* contact section - solid cards */
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.8rem;
+      margin: 2rem 0 3rem;
+    }
+    .contact-card {
+      background: #ffffff;
+      border-radius: 1.5rem;
+      padding: 1.4rem;
+      flex: 1;
+      min-width: 180px;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+      border: 1px solid #ffd6aa;
+    }
+    .contact-card i {
+      font-size: 2rem;
+      color: #ff914d;
+      margin-bottom: 0.8rem;
+    }
+    .btn-solid {
+      background: #ff914d;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      color: white;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 500;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #1e2a2f;
+      color: #ddcebc;
+      margin-top: 2rem;
+      border-radius: 2rem 2rem 0 0;
+    }
+
+    @media (max-width: 700px) {
+      .hero-card h1 { font-size: 2rem; }
+      .player-bar { flex-direction: column; align-items: stretch; padding: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <div class="logo"><i class="fas fa-headphones"></i> DAVE's PLAYLIST</div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#playlists">Playlist</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <!-- Hero Section: name, most played, scroll down -->
+  <section id="home" class="hero-section">
+    <div class="hero-card">
+      <h1>🎵 WELCOME TO DAVE's PLAYLIST</h1>
+      <div class="most-played">
+        <i class="fas fa-chart-line"></i> MOST PLAYED: <strong id="mostPlayedTrack">"lovely - Billie Eilish"</strong>
+      </div>
+      <p style="max-width: 550px; margin: 0.5rem auto; color:#4a3b2c;">Your daily dose of Billie Eilish, James Arthur, Santan Dave, Asake & Zoe Wees</p>
+      <div class="scroll-down">
+        <a href="#about"><i class="fas fa-chevron-down"></i><br><span style="font-size: 0.8rem;">Scroll Down</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Me: why I love music -->
+  <section id="about">
+    <h2 class="section-title">🎶 About My Music Love</h2>
+    <div class="about-card">
+      <i class="fas fa-heart" style="color:#ff6b4a; font-size: 2rem; margin-bottom: 0.5rem; display: inline-block;"></i>
+      <p style="font-size: 1.05rem; margin-top: 0.5rem;">Music is the shortcut to every emotion I've ever felt. The haunting harmonies of <strong>Billie Eilish</strong>, the raw, heartfelt lyrics of <strong>James Arthur</strong>, the poetic storytelling of <strong>Santan Dave</strong>, the infectious Afrobeats energy of <strong>Asake</strong>, and the powerful vulnerability of <strong>Zoe Wees</strong> — each artist adds a unique color to my life. Whether I'm coding, driving through Accra, or just reflecting, a great song transforms the ordinary into magic. That's why I built this playlist: to share the soundtrack of my soul.</p>
+      <p style="margin-top: 1rem;">✨ "Where words leave off, music begins." — Heinrich Heine ✨</p>
+    </div>
+  </section>
+
+  <!-- PLAYLIST section - full functionality -->
+  <section id="playlists">
+    <h2 class="section-title">🎧 My Favourite Tracks</h2>
+    <div class="playlist-grid" id="songsGrid"></div>
+  </section>
+
+  <!-- Fixed Audio Player -->
+  <div class="player-bar">
+    <div class="now-playing"><i class="fas fa-music"></i> <span id="currentTrackLabel">Pick a song</span></div>
+    <audio id="audioPlayer" controls preload="metadata"></audio>
+    <div><small style="color:#ffe0b5;">🎸 Dave's selection</small></div>
+  </div>
+
+  <!-- Get In Touch section with exact contacts -->
+  <section id="contact">
+    <h2 class="section-title">📬 Get In Touch</h2>
+    <div class="contact-row">
+      <div class="contact-card">
+        <i class="fas fa-phone-alt"></i>
+        <h3>Phone / WhatsApp</h3>
+        <p style="font-weight: 600;">+233 50 494 3986</p>
+        <small>Available for collab</small>
+      </div>
+      <div class="contact-card">
+        <i class="fas fa-envelope"></i>
+        <h3>Email</h3>
+        <p>davidasafo-adjei596@gmail.com</p>
+        <a href="mailto:davidasafo-adjei596@gmail.com" class="btn-solid"><i class="fas fa-paper-plane"></i> Send mail</a>
+      </div>
+      <div class="contact-card">
+        <i class="fab fa-github"></i>
+        <h3>GitHub</h3>
+        <a href="#" class="btn-solid" target="_blank"><i class="fab fa-github"></i> dave-codes</a>
+        <p style="margin-top: 0.5rem;">Open source & music</p>
+      </div>
+      <div class="contact-card">
+        <i class="fas fa-map-marker-alt"></i>
+        <h3>Location</h3>
+        <p>Accra - Accra, Ghana</p>
+        <small>Heart of rhythm</small>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2025 DAVE's PLAYLIST — Billie Eilish · James Arthur · Santan Dave · Asake · Zoe Wees</p>
+  <p><i class="fas fa-headphones"></i> Built with pure rhythm | Accra, Ghana</p>
+</footer>
+
+<script>
+  // ---------- SONG DATABASE (includes all requested artists) ----------
+  const songs = [
+    { id: 1, title: "lovely", artist: "Billie Eilish & Khalid", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", emoji: "🖤" },
+    { id: 2, title: "bad guy", artist: "Billie Eilish", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", emoji: "🎤" },
+    { id: 3, title: "Happier Than Ever", artist: "Billie Eilish", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", emoji: "🌧️" },
+    { id: 4, title: "Say You Won't Let Go", artist: "James Arthur", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", emoji: "🎸" },
+    { id: 5, title: "Train Wreck", artist: "James Arthur", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", emoji: "💔" },
+    { id: 6, title: "Lasting Lover", artist: "James Arthur", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3", emoji: "✨" },
+    { id: 7, title: "Clash", artist: "Santan Dave ft. Stormzy", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3", emoji: "🔥" },
+    { id: 8, title: "Location", artist: "Santan Dave", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", emoji: "🌍" },
+    { id: 9, title: "Organise", artist: "Asake", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3", emoji: "🇳🇬" },
+    { id: 10, title: "Terminator", artist: "Asake", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3", emoji: "⚡" },
+    { id: 11, title: "Control", artist: "Zoe Wees", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", emoji: "🕊️" },
+    { id: 12, title: "Girls Like Us", artist: "Zoe Wees", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", emoji: "💪" },
+    { id: 13, title: "What They Say", artist: "Zoe Wees", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", emoji: "🎶" },
+    { id: 14, title: "Bandana", artist: "Asake", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", emoji: "🕶️" }
+  ];
+
+  // play counts storage (localStorage)
+  let playCounts = JSON.parse(localStorage.getItem('davePlaylistCounts')) || {};
+  
+  function incrementPlay(songId) {
+    playCounts[songId] = (playCounts[songId] || 0) + 1;
+    localStorage.setItem('davePlaylistCounts', JSON.stringify(playCounts));
+    updateMostPlayedUI();
+    updatePlayCountDisplay();
+  }
+
+  function updateMostPlayedUI() {
+    let maxCount = -1;
+    let mostPlayedSong = null;
+    for (let [id, count] of Object.entries(playCounts)) {
+      if (count > maxCount) {
+        maxCount = count;
+        mostPlayedSong = songs.find(s => s.id == id);
+      }
+    }
+    if (mostPlayedSong) {
+      document.getElementById('mostPlayedTrack').innerHTML = `"${mostPlayedSong.title} - ${mostPlayedSong.artist}"`;
+    } else {
+      document.getElementById('mostPlayedTrack').innerHTML = `"lovely - Billie Eilish"`;
+    }
+  }
+
+  function updatePlayCountDisplay() {
+    const allCards = document.querySelectorAll('.song-card');
+    allCards.forEach((card, idx) => {
+      const songId = parseInt(card.getAttribute('data-id'));
+      if (songId) {
+        const countSpan = card.querySelector('.play-count-badge');
+        if (countSpan) countSpan.innerText = `🎧 plays: ${playCounts[songId] || 0}`;
+      }
+    });
+  }
+
+  // audio player logic
+  const audio = document.getElementById('audioPlayer');
+  const currentLabel = document.getElementById('currentTrackLabel');
+  let currentSongObj = null;
+
+  function playSong(song) {
+    audio.src = song.src;
+    audio.play().catch(e => console.log("autoplay blocked, but user can click play manually"));
+    currentLabel.innerText = `${song.title} — ${song.artist}`;
+    currentSongObj = song;
+    incrementPlay(song.id);
+  }
+
+  // render playlist
+  function renderPlaylist() {
+    const grid = document.getElementById('songsGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    songs.forEach(song => {
+      const card = document.createElement('div');
+      card.className = 'song-card';
+      card.setAttribute('data-id', song.id);
+      card.innerHTML = `
+        <div class="song-title">
+          <span>${song.title}</span>
+          <span>${song.emoji}</span>
+        </div>
+        <div class="artist"><i class="fas fa-microphone-alt"></i> ${song.artist}</div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
+          <button class="play-btn" data-id="${song.id}"><i class="fas fa-play-circle"></i> Play</button>
+          <span class="play-count-badge">🎧 plays: ${playCounts[song.id] || 0}</span>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    // attach events to buttons
+    document.querySelectorAll('.play-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = parseInt(btn.getAttribute('data-id'));
+        const selected = songs.find(s => s.id === id);
+        if (selected) playSong(selected);
+      });
+    });
+  }
+
+  // refresh UI when play counts change
+  function refreshCounters() {
+    updatePlayCountDisplay();
+    updateMostPlayedUI();
+  }
+
+  // listen to audio end
+  audio.addEventListener('ended', () => {
+    currentLabel.innerText = "🎵 Track ended — pick another vibe";
+  });
+
+  // initial load
+  window.addEventListener('load', () => {
+    renderPlaylist();
+    updateMostPlayedUI();
+    // preload a default preview
+    const firstSong = songs[0];
+    if(firstSong) {
+      audio.src = firstSong.src;
+      currentLabel.innerText = `Ready: ${firstSong.title} — ${firstSong.artist}`;
+    }
+    setInterval(refreshCounters, 1500);
+  });
+</script>
+</body>
+</html>
